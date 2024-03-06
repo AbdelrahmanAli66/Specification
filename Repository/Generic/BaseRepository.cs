@@ -27,7 +27,7 @@ namespace Repository.Generic
         {
             return _set;
         }
-        public IQueryable<T> ApplySpecification(Specification<T> specification)
+        public IQueryable<T> ApplySpecification(SpecificationOLD<T> specification)
         {
             IQueryable<T> _query = _set;
             if (specification.Criteria is not null)

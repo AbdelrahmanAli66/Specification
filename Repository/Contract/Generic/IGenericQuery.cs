@@ -4,6 +4,6 @@
     {
         IQueryable<T> Query();
         ICollection<T> GetAll();
-        IQueryable<T> ApplySpecification(Specification<T> specification);
+        IQueryable<T> ApplySpecification(SpecificationOLD<T> specification);
     }
 }

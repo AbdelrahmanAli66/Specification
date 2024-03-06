@@ -2,28 +2,28 @@
 
 namespace Repository
 {
-    public abstract class Specification<T> where T : class
+    public abstract class SpecificationOLD<T> where T : class
     {
-        protected Specification(Expression<Func<T, bool>> criteria) => Criteria = criteria;
+        protected SpecificationOLD(Expression<Func<T, bool>> criteria) => Criteria = criteria;
         public Expression<Func<T, bool>> Criteria { get; }
         public List<Expression<Func<T, object>>> IncludeExpressions { get; } = [];
         protected void AddInclude(Expression<Func<T, object>> includeExpression) => IncludeExpressions.Add(includeExpression);
-        public Specification<T> And(Specification<T> rightSpecification)
+        public SpecificationOLD<T> And(SpecificationOLD<T> rightSpecification)
         {
-            return new AndSpecification<T>(this, rightSpecification);
+            return new AndSpecificationOLD<T>(this, rightSpecification);
         }
-        public Specification<T> Or(Specification<T> rightSpecification)
+        public SpecificationOLD<T> Or(SpecificationOLD<T> rightSpecification)
         {
-            return new OrSpecification<T>(this, rightSpecification);
+            return new OrSpecificationOLD<T>(this, rightSpecification);
         }
-        public Specification<T> Not()
+        public SpecificationOLD<T> Not()
         {
-            return new NotSpecification<T>(this);
+            return new NotSpecificationOLD<T>(this);
         }
     }
-    internal sealed class AndSpecification<T> : Specification<T> where T : class
+    internal sealed class AndSpecificationOLD<T> : SpecificationOLD<T> where T : class
     {
-        public AndSpecification(Specification<T> left, Specification<T> right) :
+        public AndSpecificationOLD(SpecificationOLD<T> left, SpecificationOLD<T> right) :
             base(Expression.Lambda<Func<T, bool>>(Expression.AndAlso(
                 left.Criteria.Body, // Accessing the body of the lambda expression
                 Expression.Invoke(right.Criteria, left.Criteria.Parameters)), // Invoking right criteria with parameters of left criteria
@@ -35,9 +35,9 @@ namespace Repository
             //}
         }
     }
-    internal sealed class OrSpecification<T> : Specification<T> where T : class
+    internal sealed class OrSpecificationOLD<T> : SpecificationOLD<T> where T : class
     {
-        public OrSpecification(Specification<T> left, Specification<T> right) :
+        public OrSpecificationOLD(SpecificationOLD<T> left, SpecificationOLD<T> right) :
             base(Expression.Lambda<Func<T, bool>>(Expression.OrElse(
                 left.Criteria.Body, // Accessing the body of the lambda expression
                 Expression.Invoke(right.Criteria, left.Criteria.Parameters)), // Invoking right criteria with parameters of left criteria
@@ -49,9 +49,9 @@ namespace Repository
             //}
         }
     }
-    internal sealed class NotSpecification<T> : Specification<T> where T : class
+    internal sealed class NotSpecificationOLD<T> : SpecificationOLD<T> where T : class
     {
-        public NotSpecification(Specification<T> operation) :
+        public NotSpecificationOLD(SpecificationOLD<T> operation) :
             base(Expression.Lambda<Func<T, bool>>(Expression.Not(
                 operation.Criteria.Body), // Invoking right criteria with parameters of left criteria
                 operation.Criteria.Parameters))
