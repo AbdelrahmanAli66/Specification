@@ -6,8 +6,8 @@ namespace Service.Contract
     {
         Item? GetById(int id);
         List<Item> GetItems();
-        void AddItem(Item item);
-        void UpdateItem(Item item);
+        Item AddItem(Item item);
+        Item UpdateItem(Item item);
         void RemoveItem(int id);
 
     }

@@ -17,9 +17,9 @@ namespace Repository.Generic
 
         public void Delete(T entity) => _set.Remove(entity);
 
-        public async Task<ICollection<T>> GetAll(CancellationToken cancellationToken)
+        public virtual ICollection<T> GetAll()
         {
-            return await _set.ToListAsync(cancellationToken);
+            return _set.ToList();
         }
         public void Update(T entity) => _set.Update(entity);
 

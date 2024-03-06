@@ -1,33 +1,45 @@
 ﻿using Domain;
+using Repository.Contract;
+using Repository.Contract.Generic;
 using Service.Contract;
 
 namespace Service
 {
-    public class ItemService : IItemService
+    public class ItemService(IItemRepository itemRepository, IUnitOfWork unitOfWork) : IItemService
     {
-        public void AddItem(Item item)
+        public Item AddItem(Item item)
         {
-            throw new NotImplementedException();
+            itemRepository.Add(item);
+            unitOfWork.SaveChanges();
+            return item;
         }
 
         public Item? GetById(int id)
         {
-            throw new NotImplementedException();
+            return itemRepository.GetItem(id);
         }
 
         public List<Item> GetItems()
         {
-            throw new NotImplementedException();
+            return itemRepository.GetAll().ToList();
         }
 
         public void RemoveItem(int id)
         {
-            throw new NotImplementedException();
+            Item? item = itemRepository.GetItem(id);
+            if(item is not null)
+            {
+                itemRepository.Delete(item);
+                unitOfWork.SaveChanges();
+            }
+            
         }
 
-        public void UpdateItem(Item item)
+        public Item UpdateItem(Item item)
         {
-            throw new NotImplementedException();
+            itemRepository.Update(item);
+            unitOfWork.SaveChanges();
+            return item;
         }
     }
 }

@@ -3,7 +3,7 @@
     public interface IGenericQuery<T> where T : class
     {
         IQueryable<T> Query();
-        Task<ICollection<T>> GetAll(CancellationToken cancellationToken);
+        ICollection<T> GetAll();
         IQueryable<T> ApplySpecification(Specification<T> specification);
     }
 }

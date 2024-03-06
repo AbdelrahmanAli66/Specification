@@ -1,33 +1,44 @@
 ﻿using Domain;
+using Repository.Contract;
+using Repository.Contract.Generic;
 using Service.Contract;
 
 namespace Service
 {
-    public class StoreService : IStoreService
+    public class StoreService(IStoreRepository storeRepository, IUnitOfWork unitOfWork) : IStoreService
     {
-        public void AddStore(Store Store)
+        public Store AddStore(Store Store)
         {
-            throw new NotImplementedException();
+            storeRepository.Add(Store);
+            unitOfWork.SaveChanges();
+            return Store;
         }
 
         public Store? GetById(int id)
         {
-            throw new NotImplementedException();
+            return storeRepository.GetStore(id);
         }
 
         public List<Store> GetStores()
         {
-            throw new NotImplementedException();
+            return storeRepository.GetAll().ToList();
         }
 
         public void RemoveStore(int id)
         {
-            throw new NotImplementedException();
+            Store? store = storeRepository.GetStore(id);
+            if (store is not null)
+            {
+                storeRepository.Delete(store);
+                unitOfWork.SaveChanges();
+            }
         }
 
-        public void UpdateStore(Store Store)
+        public Store UpdateStore(Store Store)
         {
-            throw new NotImplementedException();
+            storeRepository.Update(Store);
+            unitOfWork.SaveChanges();
+            return Store;
         }
     }
 }

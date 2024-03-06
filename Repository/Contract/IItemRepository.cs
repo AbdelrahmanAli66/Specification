@@ -5,5 +5,6 @@ namespace Repository.Contract
 {
     public interface IItemRepository : IGenericQuery<Item>, IGenericAddUpdate<Item>, IGenericDelete<Item>
     {
+        Item? GetItem(int id);
     }
 }

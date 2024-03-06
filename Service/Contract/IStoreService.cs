@@ -6,8 +6,8 @@ namespace Service.Contract
     {
         Store? GetById(int id);
         List<Store> GetStores();
-        void AddStore(Store Store);
-        void UpdateStore(Store Store);
+        Store AddStore(Store Store);
+        Store UpdateStore(Store Store);
         void RemoveStore(int id);
     }
 }
